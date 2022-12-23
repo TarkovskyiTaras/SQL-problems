@@ -1,0 +1,126 @@
+
+-- https://www.w3resource.com/postgresql-exercises/insert-record/
+
+/*
+table countries:
+
+Column        |         Type          | Modifiers
+--------------+-----------------------+-----------
+ country_id   | character varying(2)  |
+ country_name | character varying(40) |
+ region_id    | numeric(10,0)
+*/
+
+CREATE TABLE countries
+(
+    country_id VARCHAR(2),
+    country_name VARCHAR(40),
+    region_id NUMERIC(10,0)
+);
+
+-- 1. Write a SQL statement to insert a record with your own value into the table countries against each column.
+
+INSERT INTO countries
+VALUES ('U', 'Ukraine', 1);
+
+-- 2. Write a SQL statement to insert one row into the table countries against the column country_id and country_name.
+
+INSERT INTO countries
+(country_id, country_name)
+VALUES ('US', 'USA');
+
+-- 3. Write a SQL statement to create duplicates of countries table named country_new with all structure and data.
+
+CREATE TABLE country_new
+AS (SELECT * FROM countries)
+WITH DATA;
+
+CREATE TABLE country_new2
+AS (SELECT country_id, country_name FROM countries)
+WITH DATA;
+
+-- 4. Write a SQL statement to insert NULL values into region_id column for a row of countries table.
+
+INSERT INTO countries
+VALUES ('U', 'UK', NULL);
+
+-- 5. Write a SQL statement to insert 3 rows by a single insert statement.
+
+INSERT INTO countries
+VALUES ('1', '1', 1), ('2', '2', 2), ('3', '3', 3);
+
+-- 6*. Write a SQL statement insert rows from the country_new table to countries table.
+-- Here are the rows for country_new table. Assume that, the countries table is empty.
+
+INSERT INTO country_new
+VALUES ('1', '1', 1), ('2', '2', 2), ('3', '3', 3), ('4', '4', 4);
+
+INSERT INTO countries
+SELECT * FROM country_new;
+
+-- 7. Write a SQL statement to insert one row in the jobs table to ensure that no duplicate values will be entered into
+-- the job_id column.
+
+CREATE TABLE jobs
+(
+    job_ID VARCHAR NOT NULL UNIQUE,
+    job_name VARCHAR
+);
+
+INSERT INTO jobs
+VALUES ('1', '1');
+
+--8. Write a SQL statement to insert a record into the table countries to ensure that, at country_id and the region_id combination
+-- will be entered once in the table.
+
+CREATE TABLE countries2
+(
+    country_id VARCHAR(2),
+    country_name VARCHAR(40),
+    region_id NUMERIC(10,0),
+    UNIQUE (country_id, region_id)
+);
+
+INSERT INTO countries2
+VALUES ('1', 'Ukraine', 2);
+
+-- 9. Write a SQL statement to insert rows into the table countries in which the value of country_id column will be
+-- unique and auto incremented.
+
+CREATE TABLE countries3
+(
+    country_id SERIAL PRIMARY KEY,
+    country_name VARCHAR(40),
+    region_id NUMERIC(10,0)
+);
+
+INSERT INTO countries3
+(country_name, region_id)
+VALUES ('USA', '4');
+
+-- 10. Write a SQL statement to insert records into the table countries to ensure that the country_id column will
+-- not contain any duplicate data and this will be automatically incremented and the column country_name will be filled
+-- up by 'N/A' if no value assigned to that column.
+
+CREATE TABLE countries
+(
+    country_id SERIAL PRIMARY KEY,
+    country_name VARCHAR(40) DEFAULT 'N/A',
+    region_id NUMERIC(10,0)
+);
+
+-- 11. Write a SQL statement to insert rows into the job_history table in which one column job_id is containing those
+-- values which exist in job_id column of jobs table.
+
+CREATE TABLE job_history
+(
+    job_id VARCHAR REFERENCES jobs (job_id),
+    date_hired VARCHAR,
+    date_fired VARCHAR
+);
+
+CREATE TABLE jobs
+(
+    job_id VARCHAR PRIMARY KEY,
+    job_name VARCHAR
+);
