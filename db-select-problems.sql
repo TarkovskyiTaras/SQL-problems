@@ -46,3 +46,22 @@ SELECT first_name, last_name, salary, salary*0.15 AS PF FROM employees;
 SELECT first_name, last_name, salary
 FROM employees
 ORDER BY salary;
+
+-- 6. Write a query to get the total salaries payable to employees.
+
+SELECT SUM(salary) FROM employees;
+
+-- 7*. Write a query to get the maximum and minimum salary paid to the employees.
+
+SELECT * FROM employees WHERE salary = (SELECT MAX(salary) FROM employees);
+VS
+SELECT * FROM employees WHERE salary = MAX(salary) -- not correct;
+
+SELECT * FROM employees WHERE salary = (SELECT MAX(salary) FROM employees) OR salary = (SELECT MIN(salary) FROM employees) ORDER BY salary DESC;
+
+-- 8. Write a query to get the average salary and number of employees are working.
+
+SELECT AVG(salary), COUNT(DISTINCT(last_name)) FROM employees;
+
+INSERT INTO employees VALUES ('person1_fn', 'person1_ln', 1, 500);
+SELECT AVG(salary), COUNT(*) FROM employees;
