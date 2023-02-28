@@ -1,4 +1,5 @@
 -- PostgreSQL SELECT [19 exercises with solution]
+-- https://www.w3resource.com/postgresql-exercises/basic/
 
 CREATE TABLE employees
 (
@@ -65,3 +66,4 @@ SELECT AVG(salary), COUNT(DISTINCT(last_name)) FROM employees;
 
 INSERT INTO employees VALUES ('person1_fn', 'person1_ln', 1, 500);
 SELECT AVG(salary), COUNT(*) FROM employees;
+

@@ -242,14 +242,22 @@ CREATE TABLE employees
 -- ON DELETE RESTRICT action rejects the deletion. The default action is ON DELETE RESTRICT.
 -- Assume that the following is the structure of the table jobs.
 
-CREATE TABLE table_1
-(
-    field1 VARCHAR PRIMARY KEY,
-    field2 VARCHAR
-);
+DROP employees1, jobs1;
 
-CREATE TABLE table_2
-(
-    field1 VARCHAR REFERENCES table_1(field1) ON UPDATE CASCADE,
-    field2 VARCHAR
-);
+CREATE TABLE employees1
+    (employee_id INTEGER,
+     first_name VARCHAR,
+     last_name VARCHAR,
+     job_id INTEGER,
+     salary INTEGER,
+     CONSTRAINT taras_constrain_pk
+     PRIMARY KEY (employee_id),
+     CONSTRAINT taras_constrain_fk
+     FOREIGN KEY (job_id) REFERENCES jobs1 (job_id)
+     ON UPDATE CASCADE
+    );
+
+CREATE TABLE jobs1
+    (job_id INTEGER PRIMARY KEY,
+     job_tittle VARCHAR
+    );
